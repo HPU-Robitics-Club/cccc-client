@@ -6,6 +6,9 @@ hostname = "127.0.0.1"
 port = 5000
 IP = f'https://{hostname}:{port}'
 
+previousX = 0.0
+previousY = 0.0
+
 def registerControllerListener():
     while True:
         # Checks to make sure joystick is connected
@@ -16,12 +19,16 @@ def registerControllerListener():
                     x = joystick.rx
                     y = joystick.ry
 
-                    res = requests.post(IP, {
-                        "controller_x": x,
-                        "controller_y": y
-                    })
+                    if x == previousX and y == previousY:
+                        res = requests.post(IP, {
+                            "controller_x": x,
+                            "controller_y": y
+                        })
 
-                    print(res.data())
+                        print(res.data())
+
+                        previousX = x
+                        previousY = y
 
         except IOError:
             print("Unable to find joystick!")
