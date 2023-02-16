@@ -1,8 +1,10 @@
 from approxeng.input.selectbinder import ControllerResource
-from serial_communicator import SerialCommunicator, MotorCode
+from time import sleep
 import requests
 
-IP = "http://127.0.0.1:5000"
+hostname = "127.0.0.1"
+port = 5000
+IP = f'https://{hostname}:{port}'
 
 def registerControllerListener():
     while True:
@@ -19,7 +21,6 @@ def registerControllerListener():
                         "controller_y": y
                     })
 
-                    
                     print(res.data())
 
         except IOError:
